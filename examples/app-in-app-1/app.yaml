@@ -1,0 +1,18 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: app-in-app-level-1
+  namespace: argocd
+spec:
+  project: default
+  destination:
+    name: in-cluster
+    namespace: default
+  sources:
+    - repoURL: https://github.com/keenbytes/test-repo
+      ref: local-files
+    - path: examples/app-in-app-2
+      repoURL: https://github.com/keenbytes/test-repo
+      helm:
+        valueFiles:
+          - $local-files/examples/app-in-app-2/values.yaml
